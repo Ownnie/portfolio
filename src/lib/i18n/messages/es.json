@@ -1,0 +1,12 @@
+{
+    "home": {
+        "title": "Construyo productos rápidos y escalables",
+        "subtitle": "Full-stack y mobile. React/Next, Spring Boot, Flutter. Enfoque en UX y eficiencia.",
+        "seeProjects": "Ver proyectos",
+        "contact": "Hablemos"
+    },
+    "projects": {
+        "title": "Proyectos",
+        "empty": "Pronto habrá más proyectos."
+    }
+}
