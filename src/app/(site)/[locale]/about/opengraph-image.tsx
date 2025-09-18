@@ -14,7 +14,7 @@ type AboutMsgs = {
 };
 
 export default async function Image({ params }: { params: { locale: 'es' | 'en' } }) {
-    const { locale } = await params;
+    const { locale } = params;
     const messages = (await getMessages({ locale })) as AboutMsgs;
     const ap = messages.aboutPage;
 

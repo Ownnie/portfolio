@@ -9,7 +9,7 @@ type ProjectsMsgs = {
 };
 
 export default async function ProjectsPage({ params }: { params: { locale: 'es' | 'en' } }) {
-    const { locale } = await params;
+    const { locale } = params;
 
     const messages = (await getMessages({ locale })) as ProjectsMsgs;
     const P = messages.projects ?? {};

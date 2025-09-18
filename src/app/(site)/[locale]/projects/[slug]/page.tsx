@@ -24,7 +24,7 @@ export function generateStaticParams() {
 
 /* ---------------- OG ---------------- */
 export async function generateMetadata({ params }: { params: { locale: 'es' | 'en', slug: string } }) {
-    const { locale, slug } = await params;
+    const { locale, slug } = params;
     const { meta } = getProjectBySlug(slug);
 
     const base = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://tudominio.com';
@@ -50,7 +50,7 @@ type TMsgs = {
 
 /* ---------------- Page ---------------- */
 export default async function ProjectDetail({ params }: { params: { locale: 'es' | 'en'; slug: string } }) {
-    const { locale, slug } = await params;
+    const { locale, slug } = params;
     const messages = (await getMessages({ locale })) as TMsgs;
     const t = messages;
 

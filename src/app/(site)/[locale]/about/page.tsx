@@ -20,7 +20,7 @@ type AP = {
 type AboutMsgs = { aboutPage?: AP };
 
 export async function generateMetadata({ params }: { params: { locale: 'es' | 'en' } }) {
-    const { locale } = await params;
+    const { locale } = params;
     const base = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://tudominio.com';
     const og = `${base}/${locale}/about/opengraph-image`;
     return {
@@ -46,7 +46,7 @@ function extractTechs(lines: string[]): string[] {
 }
 
 export default async function AboutPage({ params }: { params: { locale: 'es' | 'en' } }) {
-    const { locale } = await params;
+    const { locale } = params;
     const messages = (await getMessages({ locale })) as AboutMsgs;
     const ap = messages.aboutPage;
 
