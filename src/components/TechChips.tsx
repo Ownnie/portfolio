@@ -7,7 +7,6 @@ import {
     SiSpringboot, SiExpress, SiAmazon, SiFirebase, SiDocker, SiKubernetes, SiSupabase,
     SiPostgresql, SiMongodb, SiMysql, SiTypescript, SiJavascript, SiHtml5, SiCss3, SiOpenjdk
 } from 'react-icons/si';
-import { FaJava } from 'react-icons/fa';
 
 type Props = { items: string[]; size?: 'sm' | 'md' };
 const slug = (s: string) => s.toLowerCase().replace(/[\.\s]/g, '');

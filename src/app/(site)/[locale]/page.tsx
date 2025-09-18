@@ -1,17 +1,17 @@
+export const runtime = 'nodejs';
+
 import Link from 'next/link';
-import Image from 'next/image';
 import { getTranslations } from 'next-intl/server';
 import { getProjectBySlug } from '@/lib/mdx';
 import SafeImage from '@/components/safe-image';
 
 import ExperienceTimeline, { ExpItem } from '@/components/ExperienceTimeline';
-import ProjectsTeaser, { ProjectCard } from '@/components/ProjectsTeaser';
+import ProjectsTeaser from '@/components/ProjectsTeaser';
 
-type ProjectMsg = { title: string; description: string };
 
 /*-------------------OG-------------------- */
-export async function generateMetadata({ params }: { params: Promise<{ locale: 'es' | 'en' }> }) {
-  const { locale } = await params;
+export async function generateMetadata({ params }: { params: { locale: 'es' | 'en' } }) {
+  const { locale } = params;
   const base = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://tudominio.com';
   const og = `${base}/${locale}/opengraph-image`;
 
@@ -23,30 +23,9 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: '
   };
 }
 
-/* ---------------- helpers ---------------- */
-function normalizeUrl(u?: string | null): string | null {
-  const s = (u ?? '').trim();
-  return s.length > 0 ? s : null;
-}
-function pickLink(
-  links: Array<{ label?: string; href?: string; type?: string }> | undefined,
-  kind: 'repo' | 'demo'
-): string | null {
-  if (!links?.length) return null;
-  const byType = links.find(l => l.type === kind);
-  const byTypeHref = normalizeUrl(byType?.href);
-  if (byTypeHref) return byTypeHref;
-  if (kind === 'repo') {
-    const byLabel = links.find(l => l?.label && /git|repo/i.test(l.label!));
-    return normalizeUrl(byLabel?.href);
-  }
-  const byLabel = links.find(l => l?.label && /demo|preview|site|app|prod|vercel|netlify/i.test(l.label!));
-  return normalizeUrl(byLabel?.href);
-}
-
 /* ---------------- page ---------------- */
-export default async function Home({ params }: { params: Promise<{ locale: 'es' | 'en' }> }) {
-  const { locale } = await params;
+export default async function Home({ params }: { params: { locale: 'es' | 'en' } }) {
+  const { locale } = params;
 
   const tHome = await getTranslations({ locale, namespace: 'home' });
   const tBtn = await getTranslations({ locale, namespace: 'buttons' });
@@ -56,26 +35,38 @@ export default async function Home({ params }: { params: Promise<{ locale: 'es' 
 
   // proyectos destacados
   const featuredSlugs = (await tHome.raw('projects.featuredSlugs')) as string[];
+  type ProjectCard = {
+    slug: string;
+    title: string;
+    description: string;
+    cover?: string;
+    stack: string[];
+    role?: string;
+    period?: string;
+    links: { label?: string; href?: string; type?: string }[];
+  };
+
   const projects: ProjectCard[] = (await Promise.all(
-    featuredSlugs.map(async (slug) => {
+    featuredSlugs.map(async (slug): Promise<ProjectCard | null> => {
       try {
         const { meta } = getProjectBySlug(slug);
-        const pm = (await tHome.raw(`projects.items.${slug}`)) as ProjectMsg;
+        const pm = (await tHome.raw(`projects.items.${slug}`)) as { title?: string; description?: string };
         return {
           slug,
           title: pm?.title ?? meta.title,
           description: pm?.description ?? meta.description ?? '',
           cover: meta.cover,
-          stack: meta.stack,
-          role: meta.role,
-          period: meta.period,
-          links: (meta.links ?? []) as any
+          stack: Array.isArray(meta.stack) ? meta.stack : [],
+          role: meta.role ?? '',
+          period: meta.period ?? '',
+          links: (meta.links ?? []) as Array<{ label?: string; href?: string; type?: string }>
         };
       } catch {
         return null;
       }
     })
-  )).filter(Boolean) as ProjectCard[];
+  )).filter((x): x is ProjectCard => x !== null);
+
 
   return (
     <div>

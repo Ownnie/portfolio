@@ -15,13 +15,15 @@ import { FadeIn, SlideInLi } from '@/components/motion/Fade';
 
 export const dynamicParams = false;
 
+export const runtime = 'nodejs';
+
 // Slugs estáticos (locale lo resuelve el segmento padre)
 export function generateStaticParams() {
     return getAllProjects().map((p) => ({ slug: p.slug }));
 }
 
 /* ---------------- OG ---------------- */
-export async function generateMetadata({ params }: { params: Promise<{ locale: 'es' | 'en', slug: string }> }) {
+export async function generateMetadata({ params }: { params: { locale: 'es' | 'en', slug: string } }) {
     const { locale, slug } = await params;
     const { meta } = getProjectBySlug(slug);
 
@@ -36,11 +38,21 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: '
     };
 }
 
+type TMsgs = {
+    nav?: { projects?: string };
+    buttons?: { code?: string; preview?: string };
+    projectDetail?: {
+        highlights?: string;
+        back?: string; // 👈 agrega esta línea
+    };
+};
+
+
 /* ---------------- Page ---------------- */
-export default async function ProjectDetail({ params }: { params: Promise<{ locale: 'es' | 'en'; slug: string }> }) {
+export default async function ProjectDetail({ params }: { params: { locale: 'es' | 'en'; slug: string } }) {
     const { locale, slug } = await params;
-    const messages = await getMessages({ locale });
-    const t = messages as any;
+    const messages = (await getMessages({ locale })) as TMsgs;
+    const t = messages;
 
     const data = getProjectBySlug(slug);
     if (!data) return notFound();

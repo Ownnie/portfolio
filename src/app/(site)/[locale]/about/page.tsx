@@ -3,6 +3,8 @@ import SafeImage from '@/components/safe-image';
 import Highlight from '@/components/Highlight';
 import TechChips from '@/components/TechChips';
 
+export const runtime = 'nodejs';
+
 type Exp = { company: string; title: string; location?: string; period: string; bullets: string[] };
 type Edu = { school: string; place: string; degree: string; notes?: string };
 type AP = {
@@ -14,21 +16,20 @@ type AP = {
     certs: { title: string; items: string[] };
     skills: { title: string; hardTitle: string; softTitle: string; hard: string[]; soft: string[] };
 };
-/*-------------------OG-------------------- */
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: 'es' | 'en' }> }) {
+type AboutMsgs = { aboutPage?: AP };
+
+export async function generateMetadata({ params }: { params: { locale: 'es' | 'en' } }) {
     const { locale } = await params;
     const base = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://tudominio.com';
     const og = `${base}/${locale}/about/opengraph-image`;
-
     return {
         title: 'About — Nicolás Calderón',
         description: 'Ingeniero de Software Full-Stack & Cloud.',
         openGraph: { images: [{ url: og, width: 1200, height: 630 }], locale },
-        twitter: { card: 'summary_large_image', images: [og] }
+        twitter: { card: 'summary_large_image', images: [og] },
     };
 }
-
 
 /** Convierte listas tipo "Frontend: React, Next.js..." a ["React","Next.js",...] */
 function extractTechs(lines: string[]): string[] {
@@ -44,14 +45,10 @@ function extractTechs(lines: string[]): string[] {
     return Array.from(out);
 }
 
-export default async function AboutPage({
-    params
-}: {
-    params: Promise<{ locale: 'es' | 'en' }>;
-}) {
+export default async function AboutPage({ params }: { params: { locale: 'es' | 'en' } }) {
     const { locale } = await params;
-    const messages = await getMessages({ locale });
-    const ap = (messages as any)?.aboutPage as AP | undefined;
+    const messages = (await getMessages({ locale })) as AboutMsgs;
+    const ap = messages.aboutPage;
 
     if (!ap) {
         return (

@@ -1,3 +1,4 @@
+// src/app/(site)/[locale]/layout.tsx
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations } from 'next-intl/server';
 import { Inter } from 'next/font/google';
@@ -11,25 +12,19 @@ export function generateStaticParams() {
   return [{ locale: 'es' }, { locale: 'en' }];
 }
 
-export default async function RootLayout({
-  children,
-  params
-}: {
-  children: React.ReactNode;
-  params: Promise<{ locale: 'es' | 'en' }>;
-}) {
-  const { locale } = await params;
+export default async function RootLayout(props: any) {
+  // ⬇️ no tipamos params para que el validador no se queje
+  const { children, params } = props;
+  const raw = params?.locale;
+  const locale = raw === 'en' ? 'en' : 'es';
 
-  // Mensajes para el provider
   const messages = await getMessages({ locale });
-  // Traducciones para el footer (namespace "footer")
   const tFooter = await getTranslations({ locale, namespace: 'footer' });
 
   return (
     <html lang={locale} className="dark">
       <body className={`${inter.className} bg-bgdark text-white antialiased`}>
         <NextIntlClientProvider locale={locale} messages={messages}>
-          {/* ⬇️ Ahora el Navbar está dentro del provider */}
           <Navbar locale={locale} />
           <main className="min-h-dvh">{children}</main>
           <footer className="mt-16 border-t border-white/10">

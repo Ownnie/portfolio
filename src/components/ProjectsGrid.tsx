@@ -34,7 +34,7 @@ export default function ProjectsGrid({
                 }
             }}
         >
-            {projects.map((p, i) => (
+            {projects.map((p) => (
                 <motion.div
                     key={p.slug}
                     variants={{
