@@ -1,12 +1,170 @@
 {
-    "home": {
-        "title": "Construyo productos rápidos y escalables",
-        "subtitle": "Full-stack y mobile. React/Next, Spring Boot, Flutter. Enfoque en UX y eficiencia.",
-        "seeProjects": "Ver proyectos",
-        "contact": "Hablemos"
+    "nav": {
+        "brand": "Nicolás Calderón",
+        "projects": "Proyectos",
+        "toggle": "EN"
     },
-    "projects": {
-        "title": "Proyectos",
-        "empty": "Pronto habrá más proyectos."
+    "buttons": {
+        "learnMoreMe": "Conóceme más",
+        "seeAllProjects": "Ver todos los proyectos",
+        "code": "Código",
+        "preview": "Preview",
+        "readCase": "Ver caso"
+    },
+    "home": {
+        "hero": {
+            "title": "Ingeniero de Software | Full-Stack & Cloud",
+            "sub": "Diseño y construyo productos web y móviles rápidos, escalables y orientados a negocio."
+        },
+        "experience": {
+            "title": "Experiencia laboral",
+            "items": [
+                {
+                    "title": "Mobile App Developer",
+                    "company": "SIGUS",
+                    "location": "Remoto",
+                    "period": "Mar 2025 – Presente",
+                    "summary": "App móvil CRM para seguridad privada: turnos, check-ins/outs, patrullajes y supervisión. UI moderna, corrección de bugs críticos y mejoras de rendimiento en campo."
+                },
+                {
+                    "title": "Full-stack Developer",
+                    "company": "Freelance",
+                    "location": "Remoto",
+                    "period": "Abr 2023 – Mar 2025",
+                    "summary": "15+ sitios y apps full-stack. Integraciones REST (Node.js/Spring Boot), automatizaciones con IA y tiempos de carga <2s. 90% de proyectos entregados a tiempo."
+                }
+            ]
+        },
+        "projects": {
+            "title": "Proyectos",
+            "empty": "Pronto habrá más proyectos.",
+            "featuredSlugs": [
+                "wecinema",
+                "alejoparrilla",
+                "cremhelado",
+                "sigusapp"
+            ],
+            "items": {
+                "wecinema": {
+                    "title": "WeCinema — B2B Film Marketplace",
+                    "description": "Marketplace que conecta cineastas con estudios. Mantenimiento del MVP y simplificación de integraciones."
+                },
+                "alejoparrilla": {
+                    "title": "AlejoParrilla — Suscripciones restaurante",
+                    "description": "Web app de suscripciones; automatización de cupones y UI responsiva."
+                },
+                "cremhelado": {
+                    "title": "CremHelado — Plataforma de innovación con IA",
+                    "description": "Validaciones con IA para detectar duplicados y agilizar evaluación de propuestas."
+                },
+                "sigusapp": {
+                    "title": "SigusApp — CRM para seguridad privada",
+                    "description": "App móvil para turnos, check-ins/outs y patrullajes; foco en estabilidad y UX."
+                }
+            }
+        },
+        "about": {
+            "title": "Sobre mí",
+            "lead": "Desarrollador Full-Stack y Arquitecto de Soluciones Cloud, con interés en IA.",
+            "body": "Soy un ingeniero de software de Bogotá, Colombia. Me apasiona crear soluciones escalables y orientadas a resultados con React/Next.js, TypeScript, Java/Spring Boot y Flutter. Experiencia en APIs, integraciones y despliegues en Vercel/AWS/Azure. Trabajo con enfoque en UX, performance y claridad técnica.",
+            "bullets": [
+                "Full-stack (React, Next.js, TypeScript, Spring Boot).",
+                "Back-end: APIs REST, bases de datos (PostgreSQL, MongoDB).",
+                "Cloud: Vercel, Netlify, AWS, Azure.",
+                "Integración de IA cuando aporta valor real."
+            ]
+        }
+    },
+    "aboutPage": {
+        "meta": {
+            "title": "Sobre mí — Nicolás Calderón",
+            "description": "Ingeniero de software Full-Stack & Cloud. Experiencia en web, móvil, APIs y despliegues."
+        },
+        "title": "Sobre mí",
+        "summary": {
+            "lead": "Ingeniero de Software | Full-Stack & Cloud",
+            "body": "Soy un ingeniero de software de Bogotá, Colombia. Construyo soluciones web y móviles escalables con React/Next.js, TypeScript, Java/Spring Boot y Flutter. Experiencia en APIs REST, integraciones y despliegues en Vercel/AWS/Azure, con foco en UX, performance y claridad técnica.",
+            "bullets": [
+                "Full-stack (React, Next.js, TypeScript, Spring Boot).",
+                "Back-end: APIs REST, PostgreSQL, MongoDB.",
+                "Cloud: Vercel, Netlify, AWS, Azure.",
+                "Integración de IA cuando aporta valor real."
+            ]
+        },
+        "experience": {
+            "title": "Experiencia laboral",
+            "items": [
+                {
+                    "company": "SIGUS",
+                    "title": "Mobile App Developer",
+                    "location": "Remoto",
+                    "period": "Mar 2025 – Presente",
+                    "bullets": [
+                        "Definición de arquitectura e implementación de UI móvil moderna.",
+                        "App CRM para seguridad privada: turnos, check-ins/outs, patrullajes y supervisión.",
+                        "Corrección de bugs críticos y mejoras de rendimiento en campo."
+                    ]
+                },
+                {
+                    "company": "Freelance",
+                    "title": "Full-stack Developer",
+                    "location": "Remoto",
+                    "period": "Abr 2023 – Mar 2025",
+                    "bullets": [
+                        "15+ sitios y apps; tiempos de carga <2s para hasta 500 MAU.",
+                        "Integraciones REST con Node.js y Spring Boot (mejoras de latencia).",
+                        "Automatizaciones con IA y scripts, y entregas a tiempo (≈90%)."
+                    ]
+                }
+            ]
+        },
+        "education": {
+            "title": "Educación",
+            "items": [
+                {
+                    "school": "Pontificia Universidad Javeriana",
+                    "place": "Bogotá, Colombia",
+                    "degree": "Ingeniería de Software (Bachelor’s)",
+                    "notes": "Cursos: Full-Stack, Diseño de BD, Arquitectura de Software. Proyecto con CremHelado (prototipo IA)."
+                },
+                {
+                    "school": "Universidad Politécnica de Madrid",
+                    "place": "Madrid, España",
+                    "degree": "Programa de intercambio",
+                    "notes": "Cloud avanzado, Arquitectura de Software, UX/UI, Full-Stack y Diseño de BD."
+                }
+            ]
+        },
+        "certs": {
+            "title": "Certificaciones",
+            "items": [
+                "AWS Cloud Practitioner",
+                "React From Scratch (Udemy): React, TypeScript, Next.js, Zod, Zustand, React Query, Tailwind, MERN/PERN."
+            ]
+        },
+        "skills": {
+            "title": "Habilidades",
+            "hardTitle": "Hard skills",
+            "softTitle": "Soft skills",
+            "hard": [
+                "Frontend: React, Next.js, Tailwind, Angular",
+                "Backend: Node.js, NestJS, Java, Spring Boot, Express",
+                "Cloud & DevOps: AWS, Firebase, Docker, Kubernetes, Supabase",
+                "Databases: PostgreSQL, MongoDB, MySQL",
+                "Arquitectura: APIs REST, Microservicios, Sistemas escalables",
+                "IA: Gemini API, integraciones ML"
+            ],
+            "soft": [
+                "Colaboración y comunicación",
+                "Aprendizaje rápido",
+                "Diseño centrado en el usuario"
+            ]
+        }
+    },
+    "projectDetail": {
+        "highlights": "Aspectos destacados"
+    },
+    "footer": {
+        "copyright": "Portafolio."
     }
 }

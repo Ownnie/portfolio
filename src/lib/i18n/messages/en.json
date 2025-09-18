@@ -1,12 +1,170 @@
 {
-    "home": {
-        "title": "I build fast, scalable products",
-        "subtitle": "Full-stack & mobile. React/Next, Spring Boot, Flutter. Focused on UX and efficiency.",
-        "seeProjects": "See projects",
-        "contact": "Contact"
+    "nav": {
+        "brand": "Nicolás Calderón",
+        "projects": "Projects",
+        "toggle": "ES"
     },
-    "projects": {
-        "title": "Projects",
-        "empty": "More projects coming soon."
+    "buttons": {
+        "learnMoreMe": "Learn more about me",
+        "seeAllProjects": "See all projects",
+        "code": "Code",
+        "preview": "Preview",
+        "readCase": "Read case"
+    },
+    "home": {
+        "hero": {
+            "title": "Software Engineer | Full-Stack & Cloud",
+            "sub": "I design and build fast, scalable web & mobile products that serve business goals."
+        },
+        "experience": {
+            "title": "Work experience",
+            "items": [
+                {
+                    "title": "Mobile App Developer",
+                    "company": "SIGUS",
+                    "location": "Remote",
+                    "period": "Mar 2025 – Present",
+                    "summary": "Mobile CRM app for private security: shifts, check-ins/outs, patrols and supervision. Modern UI, critical bug fixes and field performance improvements."
+                },
+                {
+                    "title": "Full-stack Developer",
+                    "company": "Freelance",
+                    "location": "Remote",
+                    "period": "Apr 2023 – Mar 2025",
+                    "summary": "15+ full-stack apps and sites. REST integrations (Node.js/Spring Boot), AI automations and <2s load times. 90% on-time delivery."
+                }
+            ]
+        },
+        "projects": {
+            "title": "Projects",
+            "empty": "More projects coming soon.",
+            "featuredSlugs": [
+                "wecinema",
+                "alejoparrilla",
+                "cremhelado",
+                "sigusapp"
+            ],
+            "items": {
+                "wecinema": {
+                    "title": "WeCinema — B2B Film Marketplace",
+                    "description": "Marketplace connecting filmmakers and studios. MVP maintenance and simplified integrations."
+                },
+                "alejoparrilla": {
+                    "title": "AlejoParrilla — Restaurant subscriptions",
+                    "description": "Subscription web app; coupon automation and responsive UI."
+                },
+                "cremhelado": {
+                    "title": "CremHelado — Innovation platform with AI",
+                    "description": "AI-based validations to detect duplicates and speed up proposal evaluation."
+                },
+                "sigusapp": {
+                    "title": "SigusApp — CRM for private security",
+                    "description": "Mobile app for shifts, check-ins/outs and patrols; stability and UX focused."
+                }
+            }
+        },
+        "about": {
+            "title": "About me",
+            "lead": "Full-Stack Developer & Cloud Solutions Architect, with a strong interest in AI.",
+            "body": "I’m a software engineer from Bogotá, Colombia. I love building scalable, results-driven solutions with React/Next.js, TypeScript, Java/Spring Boot and Flutter. Experience with APIs, integrations and deployments on Vercel/AWS/Azure. I work with a focus on UX, performance and technical clarity.",
+            "bullets": [
+                "Full-stack (React, Next.js, TypeScript, Spring Boot).",
+                "Back-end: REST APIs, databases (PostgreSQL, MongoDB).",
+                "Cloud: Vercel, Netlify, AWS, Azure.",
+                "AI integration when it adds real value."
+            ]
+        }
+    },
+    "aboutPage": {
+        "meta": {
+            "title": "About — Nicolás Calderón",
+            "description": "Full-Stack & Cloud Software Engineer. Experience in web, mobile, APIs and deployments."
+        },
+        "title": "About me",
+        "summary": {
+            "lead": "Software Engineer | Full-Stack & Cloud",
+            "body": "I’m a software engineer from Bogotá, Colombia. I build scalable web and mobile solutions with React/Next.js, TypeScript, Java/Spring Boot and Flutter. Experience with REST APIs, integrations and deployments on Vercel/AWS/Azure, with focus on UX, performance and technical clarity.",
+            "bullets": [
+                "Full-stack (React, Next.js, TypeScript, Spring Boot).",
+                "Back-end: REST APIs, PostgreSQL, MongoDB.",
+                "Cloud: Vercel, Netlify, AWS, Azure.",
+                "AI integration when it adds real value."
+            ]
+        },
+        "experience": {
+            "title": "Work experience",
+            "items": [
+                {
+                    "company": "SIGUS",
+                    "title": "Mobile App Developer",
+                    "location": "Remote",
+                    "period": "Mar 2025 – Present",
+                    "bullets": [
+                        "Architecture definition and modern mobile UI implementation.",
+                        "CRM app for private security: shifts, check-ins/outs, patrols and supervision.",
+                        "Critical bug fixing and performance improvements in the field."
+                    ]
+                },
+                {
+                    "company": "Freelance",
+                    "title": "Full-stack Developer",
+                    "location": "Remote",
+                    "period": "Apr 2023 – Mar 2025",
+                    "bullets": [
+                        "15+ sites & apps; sub-2s loads for up to 500 MAU.",
+                        "REST integrations with Node.js & Spring Boot (latency improvements).",
+                        "AI/script automations and on-time delivery (~90%)."
+                    ]
+                }
+            ]
+        },
+        "education": {
+            "title": "Education",
+            "items": [
+                {
+                    "school": "Pontificia Universidad Javeriana",
+                    "place": "Bogotá, Colombia",
+                    "degree": "Bachelor’s in Software Engineering",
+                    "notes": "Coursework: Full-Stack, Database Design, Software Architecture. Project with CremHelado (AI prototype)."
+                },
+                {
+                    "school": "Polytechnic University of Madrid",
+                    "place": "Madrid, Spain",
+                    "degree": "Exchange Program",
+                    "notes": "Advanced Cloud, Software Architecture & Design, UX/UI, Full-Stack, Database Design."
+                }
+            ]
+        },
+        "certs": {
+            "title": "Certifications",
+            "items": [
+                "AWS Cloud Practitioner",
+                "React From Scratch (Udemy): React, TypeScript, Next.js, Zod, Zustand, React Query, Tailwind, MERN/PERN."
+            ]
+        },
+        "skills": {
+            "title": "Skills",
+            "hardTitle": "Hard skills",
+            "softTitle": "Soft skills",
+            "hard": [
+                "Frontend: React, Next.js, Tailwind, Angular",
+                "Backend: Node.js, NestJS, Java, Spring Boot, Express",
+                "Cloud & DevOps: AWS, Firebase, Docker, Kubernetes, Supabase",
+                "Databases: PostgreSQL, MongoDB, MySQL",
+                "Architecture: REST APIs, Microservices, Scalable Systems",
+                "AI: Gemini API, ML integrations"
+            ],
+            "soft": [
+                "Team collaboration & communication",
+                "Fast learning",
+                "User-centric design"
+            ]
+        }
+    },
+    "projectDetail": {
+        "highlights": "Highlights"
+    },
+    "footer": {
+        "copyright": "Portfolio."
     }
 }

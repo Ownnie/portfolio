@@ -1,41 +1,20 @@
-/* Tailwind v4 */
-@import "tailwindcss";
-@plugin "@tailwindcss/typography";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-
-/* ---- Tokens de diseño (Tailwind v4) ---- */
-@theme {
-  /* Colores de marca (morado) */
-  --color-brand-50: #f5f3ff;
-  --color-brand-100: #ede9fe;
-  --color-brand-200: #ddd6fe;
-  --color-brand-300: #c4b5fd;
-  --color-brand-400: #a78bfa;
-  --color-brand-500: #8b5cf6;
-  /* principal */
-  --color-brand-600: #7c3aed;
-  --color-brand-700: #6d28d9;
-  --color-brand-800: #5b21b6;
-  --color-brand-900: #4c1d95;
-
-  /* Fondo oscuro */
-  --color-bgdark: #0b0b10;
-
-  /* Radii (ejemplo) */
-  --radius-xl2: 1.25rem;
-}
-
-/* ---- Estilos globales ---- */
 :root {
   color-scheme: dark;
 }
 
-html.dark body {
-  background-color: var(--color-bgdark);
-  color: white;
+/* prueba rápida */
+.tlwd-ping {
+  @apply bg-brand-600 text-white px-3 py-1 rounded-xl2;
 }
 
-/* Tu helper de enlaces en contenido MDX */
-.prose :where(a):not(:where([class~="not-prose"] *)) {
-  @apply text-brand-300 hover:text-brand-200;
+/* Tailwind Typography (prose) base en dark */
+.prose :where(code):not(:where([class~="not-prose"] *)) {
+  background: rgba(255, 255, 255, .06);
+  padding: .15rem .4rem;
+  border-radius: .4rem;
+  border: 1px solid rgba(255, 255, 255, .08);
 }
