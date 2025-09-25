@@ -5,6 +5,13 @@ import path from 'node:path';
 import matter from 'gray-matter';
 import { Project as ProjectSchema, type Project } from './schema';
 
+function i18nToString(v: unknown) {
+    if (!v) return '';
+    if (typeof v === 'string') return v;
+    const obj = v as { es?: string; en?: string } | undefined;
+    return obj?.es ?? obj?.en ?? '';
+}
+
 function resolveProjectsDir() {
     const candidates = [
         path.join(process.cwd(), 'content', 'projects'),
@@ -27,7 +34,11 @@ function readAll(): Project[] {
 }
 
 export function getAllProjects(): Project[] {
-    return readAll().sort((a, b) => a.title.localeCompare(b.title));
+    return readAll().sort((a, b) => {
+        const ta = i18nToString((a.title) as unknown).toString();
+        const tb = i18nToString((b.title) as unknown).toString();
+        return ta.localeCompare(tb);
+    });
 }
 
 export function getFeaturedProjects(max = 4): Project[] {

@@ -7,6 +7,7 @@ import SafeImage from '@/components/safe-image';
 
 import ExperienceTimeline, { ExpItem } from '@/components/ExperienceTimeline';
 import ProjectsTeaser from '@/components/ProjectsTeaser';
+import { tText, tList, type Locale, type I18nText, type I18nList } from '@/lib/i18n/content';
 
 
 /*-------------------OG-------------------- */
@@ -53,12 +54,12 @@ export default async function Home({ params }: { params: { locale: 'es' | 'en' }
         const pm = (await tHome.raw(`projects.items.${slug}`)) as { title?: string; description?: string };
         return {
           slug,
-          title: pm?.title ?? meta.title,
-          description: pm?.description ?? meta.description ?? '',
+          title: pm?.title ?? tText(meta.title as I18nText, locale),
+          description: pm?.description ?? tText(meta.description as I18nText, locale) ?? '',
           cover: meta.cover,
           stack: Array.isArray(meta.stack) ? meta.stack : [],
-          role: meta.role ?? '',
-          period: meta.period ?? '',
+          role: tText(meta.role as I18nText, locale) ?? '',
+          period: tText(meta.period as I18nText, locale) ?? '',
           links: (meta.links ?? []) as Array<{ label?: string; href?: string; type?: string }>
         };
       } catch {

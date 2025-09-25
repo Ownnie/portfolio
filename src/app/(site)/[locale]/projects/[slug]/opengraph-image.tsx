@@ -2,14 +2,15 @@
 import { ImageResponse } from 'next/og';
 import { getOgFonts } from '@/lib/og/fonts';
 import { getProjectBySlug } from '@/lib/mdx';
+import { tText, type Locale, type I18nText } from '@/lib/i18n/content';
 
 export const runtime = 'nodejs';
 
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
-export default async function Image({ params }: { params: { slug: string } }) {
-    const { slug } = params;
+export default async function Image({ params }: { params: { locale: Locale; slug: string } }) {
+    const { locale, slug } = params;
     const { meta } = getProjectBySlug(slug);
 
     const fonts = await getOgFonts();
@@ -43,13 +44,13 @@ export default async function Image({ params }: { params: { slug: string } }) {
                         color: 'transparent',
                     }}
                 >
-                    {meta.title}
+                    {tText(meta.title as I18nText, locale)}
                 </div>
 
                 {meta.description ? (
                     <>
                         <div style={{ height: 14 }} />
-                        <div style={{ fontSize: 26, opacity: 0.9, maxWidth: 900 }}>{meta.description}</div>
+                        <div style={{ fontSize: 26, opacity: 0.9, maxWidth: 900 }}>{tText(meta.description as I18nText, locale)}</div>
                     </>
                 ) : null}
 

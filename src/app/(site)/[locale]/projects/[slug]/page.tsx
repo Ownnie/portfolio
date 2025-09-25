@@ -10,29 +10,30 @@ import TechChips from '@/components/TechChips';
 import { getAllProjects, getProjectBySlug } from '@/lib/mdx';
 import type { Project } from '@/lib/schema';
 
-// 👇 wrappers de cliente para animaciones
 import { FadeIn, SlideInLi } from '@/components/motion/Fade';
+import { tText, tList, type Locale, type I18nText, type I18nList } from '@/lib/i18n/content';
 
 export const dynamicParams = false;
-
 export const runtime = 'nodejs';
 
-// Slugs estáticos (locale lo resuelve el segmento padre)
 export function generateStaticParams() {
     return getAllProjects().map((p) => ({ slug: p.slug }));
 }
 
-/* ---------------- OG ---------------- */
-export async function generateMetadata({ params }: { params: { locale: 'es' | 'en', slug: string } }) {
+/* OG: usa los campos localizados también */
+export async function generateMetadata({ params }: { params: { locale: Locale; slug: string } }) {
     const { locale, slug } = params;
     const { meta } = getProjectBySlug(slug);
+
+    const title = tText(meta.title as I18nText, locale);
+    const description = tText(meta.description as I18nText, locale) || tText(meta.role as I18nText, locale) || 'Project';
 
     const base = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://tudominio.com';
     const og = `${base}/${locale}/projects/${slug}/opengraph-image`;
 
     return {
-        title: meta.title,
-        description: meta.description ?? meta.role ?? 'Project',
+        title,
+        description,
         openGraph: { images: [{ url: og, width: 1200, height: 630 }], locale },
         twitter: { card: 'summary_large_image', images: [og] }
     };
@@ -41,15 +42,10 @@ export async function generateMetadata({ params }: { params: { locale: 'es' | 'e
 type TMsgs = {
     nav?: { projects?: string };
     buttons?: { code?: string; preview?: string };
-    projectDetail?: {
-        highlights?: string;
-        back?: string; // 👈 agrega esta línea
-    };
+    projectDetail?: { highlights?: string; back?: string };
 };
 
-
-/* ---------------- Page ---------------- */
-export default async function ProjectDetail({ params }: { params: { locale: 'es' | 'en'; slug: string } }) {
+export default async function ProjectDetail({ params }: { params: { locale: Locale; slug: string } }) {
     const { locale, slug } = params;
     const messages = (await getMessages({ locale })) as TMsgs;
     const t = messages;
@@ -60,32 +56,39 @@ export default async function ProjectDetail({ params }: { params: { locale: 'es'
     const meta = data.meta as Project;
     const body = data.content;
 
-    // Techs y highlights
-    const techs = meta.stack ?? [];
-    const highlights = meta.impact?.length ? meta.impact : (meta.metrics ?? []);
+    // Localizados
+    const title = tText(meta.title, locale);
+    const description = tText(meta.description, locale);
+    const role = tText(meta.role, locale);
+    const period = tText(meta.period, locale);
 
-    // Links (condicionales)
+    const techs = meta.stack ?? [];
+    const impact = tList(meta.impact as I18nList, locale);
+    const metrics = tList(meta.metrics as I18nList, locale);
+    const highlights = impact.length ? impact : metrics;
+
     const repoUrl =
         meta.links?.find((l) => l.type === 'repo')?.href ??
-        meta.links?.find((l) => /git|repo/i.test(l.label))?.href ?? '';
+        meta.links?.find((l) => /git|repo/i.test(l.label || ''))?.href ??
+        '';
 
     const demoUrl =
         meta.links?.find((l) => l.type === 'demo')?.href ??
-        meta.links?.find((l) => /demo|preview|site|app|prod/i.test(l.label))?.href ?? '';
+        meta.links?.find((l) => /demo|preview|site|app|prod/i.test(l.label || ''))?.href ??
+        '';
 
     const backHref = `/${locale}/projects`;
 
     return (
         <div className="mx-auto max-w-4xl px-6 py-10 md:py-12">
-
             {/* Breadcrumb + volver */}
             <FadeIn as="nav" className="mb-4 flex flex-wrap items-center justify-between gap-3 text-sm text-white/60" y={6}>
                 <div>
                     <a className="hover:text-white" href={backHref}>
-                        {t?.nav?.projects ?? 'Projects'}
+                        {t?.nav?.projects ?? (locale === 'en' ? 'Projects' : 'Proyectos')}
                     </a>
                     <span className="mx-2">/</span>
-                    <span className="text-white/80">{meta.title}</span>
+                    <span className="text-white/80">{title}</span>
                 </div>
 
                 <a
@@ -98,17 +101,13 @@ export default async function ProjectDetail({ params }: { params: { locale: 'es'
 
             {/* Header */}
             <FadeIn as="header" className="mb-6" y={8}>
-                <h1 className="text-2xl md:text-3xl font-semibold">{meta.title}</h1>
-                {meta.description ? <p className="mt-2 text-white/80">{meta.description}</p> : null}
+                <h1 className="text-2xl md:text-3xl font-semibold">{title}</h1>
+                {description ? <p className="mt-2 text-white/80">{description}</p> : null}
 
-                {(meta.role || meta.period) && (
+                {(role || period) && (
                     <div className="mt-3 flex flex-wrap items-center gap-3 text-xs">
-                        {meta.role ? (
-                            <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1">{meta.role}</span>
-                        ) : null}
-                        {meta.period ? (
-                            <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1">{meta.period}</span>
-                        ) : null}
+                        {role ? <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1">{role}</span> : null}
+                        {period ? <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1">{period}</span> : null}
                     </div>
                 )}
 
@@ -118,7 +117,6 @@ export default async function ProjectDetail({ params }: { params: { locale: 'es'
                     </div>
                 ) : null}
 
-                {/* CTA superior (si hay links) */}
                 {(repoUrl || demoUrl) && (
                     <div className="mt-5 flex flex-wrap gap-3">
                         {repoUrl ? (
@@ -128,7 +126,7 @@ export default async function ProjectDetail({ params }: { params: { locale: 'es'
                                 rel="noreferrer"
                                 className="rounded-lg border border-white/12 bg-white/[0.04] px-4 py-2 text-sm hover:border-brand-600/40 hover:bg-brand-900/25"
                             >
-                                {t?.buttons?.code ?? 'Code'}
+                                {t?.buttons?.code ?? (locale === 'en' ? 'Code' : 'Código')}
                             </a>
                         ) : null}
                         {demoUrl ? (
@@ -138,7 +136,7 @@ export default async function ProjectDetail({ params }: { params: { locale: 'es'
                                 rel="noreferrer"
                                 className="rounded-lg border border-white/12 bg-white/[0.04] px-4 py-2 text-sm hover:border-brand-600/40 hover:bg-brand-900/25"
                             >
-                                {t?.buttons?.preview ?? 'Preview'}
+                                {t?.buttons?.preview ?? (locale === 'en' ? 'Preview' : 'Preview')}
                             </a>
                         ) : null}
                     </div>
@@ -150,7 +148,7 @@ export default async function ProjectDetail({ params }: { params: { locale: 'es'
                 <FadeIn as="div" className="mb-8 overflow-hidden rounded-xl border border-white/10 ring-1 ring-white/10" y={8}>
                     <Image
                         src={meta.cover}
-                        alt={meta.title}
+                        alt={title}
                         width={1200}
                         height={630}
                         className="h-auto w-full object-cover"
@@ -162,7 +160,7 @@ export default async function ProjectDetail({ params }: { params: { locale: 'es'
             {/* Highlights */}
             {highlights.length ? (
                 <section className="mb-8 rounded-xl border border-white/10 bg-white/[0.03] p-5 ring-1 ring-white/10">
-                    <h2 className="text-lg font-semibold">{t?.projectDetail?.highlights ?? 'Highlights'}</h2>
+                    <h2 className="text-lg font-semibold">{t?.projectDetail?.highlights ?? (locale === 'en' ? 'Highlights' : 'Destacados')}</h2>
                     <ul className="mt-3 grid gap-2 text-white/80">
                         {highlights.map((h, i) => (
                             <SlideInLi key={i} delay={i * 0.04}>
@@ -174,7 +172,7 @@ export default async function ProjectDetail({ params }: { params: { locale: 'es'
                 </section>
             ) : null}
 
-            {/* MDX body */}
+            {/* Cuerpo MDX (si lo quieres bilingüe, necesitarás un MDX por locale) */}
             {body ? (
                 <article className="prose prose-invert prose-h2:mt-10 prose-h2:text-white prose-h3:text-white/90 prose-p:text-white/80 prose-strong:text-white prose-a:text-brand-300">
                     <MDXRemote
@@ -192,7 +190,7 @@ export default async function ProjectDetail({ params }: { params: { locale: 'es'
                 </article>
             ) : null}
 
-            {/* Footer actions: volver + botones (repetimos para comodidad del lector) */}
+            {/* Footer actions */}
             <div className="mt-10 flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <a
                     href={backHref}
@@ -210,7 +208,7 @@ export default async function ProjectDetail({ params }: { params: { locale: 'es'
                                 rel="noreferrer"
                                 className="rounded-lg border border-white/12 bg-white/[0.04] px-4 py-2 text-sm hover:border-brand-600/40 hover:bg-brand-900/25"
                             >
-                                {t?.buttons?.code ?? 'Code'}
+                                {t?.buttons?.code ?? (locale === 'en' ? 'Code' : 'Código')}
                             </a>
                         ) : null}
                         {demoUrl ? (
@@ -220,7 +218,7 @@ export default async function ProjectDetail({ params }: { params: { locale: 'es'
                                 rel="noreferrer"
                                 className="rounded-lg border border-white/12 bg-white/[0.04] px-4 py-2 text-sm hover:border-brand-600/40 hover:bg-brand-900/25"
                             >
-                                {t?.buttons?.preview ?? 'Preview'}
+                                {t?.buttons?.preview ?? (locale === 'en' ? 'Preview' : 'Preview')}
                             </a>
                         ) : null}
                     </div>
