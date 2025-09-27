@@ -1,0 +1,29 @@
+---
+title:
+  es: "Tercer Proyecto (Carrito de Compras con Reducer)"
+  en: "Third Project (Shopping Cart with Reducer)"
+slug: "tercer-proyecto-fullstack"
+period:
+  es: "Fecha desconocida"
+  en: "Unknown date"
+role:
+  es: "Desarrollador Frontend (React + TS)"
+  en: "Frontend Developer (React + TS)"
+stack: ["React", "TypeScript", "Vite", "Tailwind CSS", "useReducer", "Custom Hooks"]
+description:
+  es: |
+    Migración del carrito de compras a `useReducer` para manejar un estado más complejo (items, cantidades,
+    subtotal, impuestos). Definí un `CartProvider` con acciones tipadas (añadir, quitar, vaciar, cambiar cantidad),
+    separé lógica en hooks reutilizables y aseguré inmutabilidad. UI con Tailwind.
+  en: |
+    Migration of the Shopping Cart to `useReducer` to handle complex state (items, quantities, subtotal, taxes).
+    Implemented a typed `CartProvider` with actions (add, remove, clear, update qty), extracted logic into reusable
+    hooks and kept state immutable. UI styled with Tailwind.
+links:
+  - { label: "Código (GitHub)", href: "https://github.com/Ownnie/TercerProyecto", type: "repo" }
+  - { label: "Vista previa", href: "https://tercerproyectofullstack.netlify.app/", type: "demo" }
+cover: "/projects/tercer-fullstack-cover.jpg"
+featured: false
+---
+Aprendizajes: reducers y acciones discriminadas en TS, memoización de selectores de carrito, separación UI/lógica,
+patrones para evitar renders innecesarios (`React.memo`, dependencias en hooks).

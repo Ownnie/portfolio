@@ -7,15 +7,29 @@ period:
   es: "Mar 2024 – Presente"
   en: "Mar 2024 – Present"
 role:
-  es: "Desarrollador móvil"
-  en: "Mobile Dev"
-stack: ["Flutter","SuiteCRM REST","PHP"]
+  es: "Desarrollador móvil (Flutter Clean Architecture + BLoC)"
+  en: "Mobile Dev (Flutter Clean Architecture + BLoC)"
+stack: ["Flutter","Dart","BLoC","Clean Architecture","SQLite/SQLCipher","SuiteCRM 4.1 REST","PHP (SuiteCRM)","Android"]
 description:
-  es: "App móvil para turnos, check-ins/outs y patrullajes; foco en estabilidad y UX."
-  en: "Mobile app for shifts, check-ins/outs and patrols; focus on stability and UX."
+  es: |
+    App móvil para **turnos, check-ins/outs, patrullajes y control**. Arquitectura **Clean Architecture** con
+    **BLoC** para estado, **cache local** (SQLite/SQLCipher) y sincronización con **SuiteCRM 4.1 REST**
+    (módulos, campos y listas). Soporte de **geolocalización** y **reconocimiento facial** (cuando está
+    disponible) para validar registros; manejo de **permisos**, colas offline y reintentos. Publicada en
+    **Google Play** con información transparente de permisos y seguridad de datos.
+  en: |
+    Mobile app for **shifts, check-ins/outs, patrols and control**. **Clean Architecture** + **BLoC** state
+    management, **local cache** (SQLite/SQLCipher) and sync against **SuiteCRM 4.1 REST** modules/fields.
+    Includes **geolocation** and **face verification** (when available) to validate entries; robust **permissions**
+    flow, offline queueing and retries. Published on **Google Play** with clear data-safety and permission details.
 links:
   - { label: "Código", href: "", type: "repo" }
   - { label: "Preview", href: "https://play.google.com/store/apps/details?id=com.sigus.app&hl=es_CO", type: "demo" }
 cover: "/projects/sigusapp-cover.jpg"
 featured: true
 ---
+Detalles técnicos:
+- Integración SuiteCRM: endpoints v4.1 (`login`, `get_entry_list`, `get_module_fields`, etc.), sanitización de `baseUrl`
+  y `apiPath`, y manejo de **tokens de sesión**.
+- **Repositorios** y **casos de uso** (domain) desacoplados del framework; pruebas de unidad a servicios.
+- Estrategias de **sincronización** (pull incremental/push diferido) y resolución de conflictos por timestamp.

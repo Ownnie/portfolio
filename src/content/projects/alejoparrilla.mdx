@@ -7,12 +7,22 @@ period:
   es: "Ene 2024 – Abr 2024"
   en: "Jan 2024 – Apr 2024"
 role:
-  es: "Desarrollador Web"
-  en: "Web Developer"
-stack: ["React","Firebase"]
+  es: "Desarrollador Web (React + Firebase)"
+  en: "Web Developer (React + Firebase)"
+stack: ["React","Firebase Auth","Cloud Firestore","Cloud Functions","Firebase Hosting","Tailwind CSS"]
 description:
-  es: "Web app de suscripciones; automatización de cupones y UI responsiva."
-  en: "Subscriptions web app; coupon automation and responsive UI."
+  es: |
+    Web app para gestionar **suscripciones** de clientes y **cupones** automáticos para un restaurante.
+    Autenticación con Firebase Auth, persistencia en **Firestore** (colecciones `users`, `subscriptions`,
+    `coupons`) y **Cloud Functions** para: generación/expiración de cupones, envíos de recordatorios
+    y validación de uso único por usuario. UI **responsive** con Tailwind y componentes reutilizables.
+    Se incluyó panel básico de métricas (activos, redención, churn) y protección de reglas de seguridad.
+  en: |
+    Web app to manage customer **subscriptions** and automated **coupon** workflows for a restaurant.
+    Firebase Auth for authentication, **Firestore** for persistence (`users`, `subscriptions`, `coupons`),
+    and **Cloud Functions** to issue/expire coupons, send reminders, and enforce single-use per user.
+    Fully **responsive** UI with Tailwind and reusable components. Added a lightweight metrics dashboard
+    (actives, redemption, churn) and hardened Firebase Security Rules.
 metrics:
   es: ["100+ usuarios en 4 meses","15+ horas/mes ahorradas"]
   en: ["100+ users in 4 months","15+ hours/month saved"]
@@ -22,3 +32,8 @@ links:
 cover: "/projects/alejoparrilla-cover.jpg"
 featured: true
 ---
+Logros técnicos:
+- Normalización de datos y **consultas indexadas** (Firestore) para búsquedas por email/estado.
+- **Idempotencia** en Cloud Functions (evita cupones duplicados en reintentos).
+- Auditoría mínima (quién/ cuándo redimió); exportación CSV.
+- Tests unitarios de utilidades (formato, validaciones) y linters en CI.

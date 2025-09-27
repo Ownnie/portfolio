@@ -7,7 +7,7 @@ import SafeImage from '@/components/safe-image';
 
 import ExperienceTimeline, { ExpItem } from '@/components/ExperienceTimeline';
 import ProjectsTeaser from '@/components/ProjectsTeaser';
-import { tText, tList, type Locale, type I18nText, type I18nList } from '@/lib/i18n/content';
+import { tText, type I18nText } from '@/lib/i18n/content';
 
 
 /*-------------------OG-------------------- */

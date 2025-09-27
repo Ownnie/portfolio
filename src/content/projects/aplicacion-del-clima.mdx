@@ -1,0 +1,29 @@
+---
+title:
+  es: "Aplicación del Clima"
+  en: "Weather Application"
+slug: "aplicacion-del-clima"
+period:
+  es: "Fecha desconocida"
+  en: "Unknown date"
+role:
+  es: "Desarrollador Frontend (React + TS)"
+  en: "Frontend Developer (React + TS)"
+stack: ["React", "TypeScript", "Vite", "Tailwind CSS", "Fetch API", "Variables de entorno (.env)"]
+description:
+  es: |
+    App de clima en React + TS que consulta una API pública (p. ej. OpenWeather). Maneja ciclo de vida de
+    petición (`loading`, `error`, `success`), parsea JSON y muestra temperatura/condiciones con iconos.
+    Uso de `.env` para la API key, utilidades para normalizar respuestas y mensajes de error amigables.
+  en: |
+    React + TS weather app consuming a public API (e.g., OpenWeather). Manages request lifecycle
+    (`loading`, `error`, `success`), parses JSON, and renders temperature/conditions with icons.
+    Uses `.env` for the API key, helpers to normalize responses, and user-friendly errors.
+links:
+  - { label: "Código (GitHub)", href: "https://github.com/Ownnie/Sexto-Proyecto", type: "repo" }
+  - { label: "Vista previa", href: "https://nicownnieaplicaciondelclima.netlify.app/", type: "demo" }
+cover: "/projects/weather-app-cover.jpg"
+featured: false
+---
+Implementación: `fetch`/`async-await`, control de reintentos mínimos, saneamiento de entrada (ciudad/país),
+y manejo de unidades. Posible mejora: memoizar resultados y cachear por ciudad.

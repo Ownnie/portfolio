@@ -7,12 +7,19 @@ period:
   es: "2024"
   en: "2024"
 role:
-  es: "Dev Full-stack"
-  en: "Full-stack Dev"
-stack: ["React","Next.js","Node.js","PostgreSQL"]
+  es: "Dev Full-stack (Next.js + Node)"
+  en: "Full-stack Dev (Next.js + Node)"
+stack: ["React","Next.js","Node.js","REST API","PostgreSQL","Prisma/ORM","Auth (JWT/OAuth)"]
 description:
-  es: "Marketplace que conecta cineastas con estudios. Mantenimiento del MVP y simplificación de integraciones."
-  en: "Marketplace connecting filmmakers and studios. MVP maintenance and simpler integrations."
+  es: |
+    **Marketplace** que conecta **cineastas** con **estudios** y agentes: perfiles verificables, publicación de
+    **scripts/proyectos**, y búsquedas por **género** (acción, comedia, drama, etc.). Mantuve el **MVP**:
+    estabilización de rutas (API REST), performance en listados con filtros, y simplificación de integraciones
+    externas. Mejoras de autenticación/autorización y normalización de datos para catálogos.
+  en: |
+    **Marketplace** connecting **filmmakers** with **studios/agents**: verified profiles, **script/project** listings,
+    and **genre** search (action, comedy, drama, etc.). I maintained the **MVP**: stabilized REST routes, improved
+    list performance with filters, and simplified external integrations. Hardened auth and normalized catalog data.
 impact:
   es: ["MVP estable","Integraciones API más simples"]
   en: ["Stable MVP","Simpler API integrations"]
@@ -25,3 +32,7 @@ links:
 cover: "/projects/wecinema-cover.jpg"
 featured: true
 ---
+Aportes:
+- Refactor de **paginación/filtrado** (cursor-based) y endpoints idempotentes.
+- **Caching** básico para catálogos (género/etiquetas) y pre-render en Next.js donde aplica.
+- Checklist de **seguridad** (CORS, rate-limit, sanitización de entrada).

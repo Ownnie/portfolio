@@ -1,0 +1,32 @@
+---
+title:
+  es: "Planificador de Gastos"
+  en: "Expense Planner"
+slug: "planificador-de-gastos"
+period:
+  es: "Fecha desconocida"
+  en: "Unknown date"
+role:
+  es: "Desarrollador Frontend (React + TS)"
+  en: "Frontend Developer (React + TS)"
+stack: ["React", "TypeScript", "Vite", "Tailwind CSS", "Context API", "useReducer", "localStorage", "Gráficas (Chart.js/Recharts)"]
+description:
+  es: |
+    App de React + TypeScript creada con Vite. Gestiona un presupuesto y lista de gastos con estado global
+    mediante Context API + useReducer y persistencia en `localStorage`. Incluye filtros por categoría/fecha,
+    totales derivados (gastado, disponible, %), y gráficas simples con una librería de charts.
+    Practiqué composición de componentes, reducers tipados (acciones discriminadas), efectos para persistencia
+    y tailwind para UI.
+  en: |
+    React + TypeScript app scaffolded with Vite. Manages a budget and expenses list using Context API +
+    useReducer for global state and `localStorage` persistence. Includes category/date filters, derived totals
+    (spent, available, %) and simple charts via a charting library. Practiced component composition, typed reducers
+    (discriminated actions), effects for persistence, and Tailwind for the UI.
+links:
+  - { label: "Código (GitHub)", href: "https://github.com/Ownnie/CuartoProyecto", type: "repo" }
+  - { label: "Vista previa", href: "https://planificadordegastosownnie.netlify.app/", type: "demo" }
+cover: "/projects/expense-planner-cover.jpg"
+featured: false
+---
+Notas técnicas: cálculos con `Array.reduce` para totales/porcentajes; serialización JSON en `localStorage`;
+reducers con tipos de acción (`ADD_EXPENSE`, `REMOVE_EXPENSE`, `SET_BUDGET`, etc.); hooks: `useReducer`, `useContext`, `useEffect`.

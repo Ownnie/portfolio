@@ -7,12 +7,21 @@ period:
   es: "2024"
   en: "2024"
 role:
-  es: "Dev Full-stack"
-  en: "Full-stack Dev"
-stack: ["Angular","Spring Boot","Gemini API"]
+  es: "Dev Full-stack (Angular + Spring Boot)"
+  en: "Full-stack Dev (Angular + Spring Boot)"
+stack: ["Angular","RxJS","Material UI","Spring Boot","REST API","PostgreSQL","Gemini API"]
 description:
-  es: "Validaciones con IA para detectar duplicados y agilizar evaluación de propuestas."
-  en: "AI validations to detect duplicates and speed up proposal review."
+  es: |
+    Módulo de **validaciones con IA** para detectar **propuestas duplicadas** o muy similares y acelerar
+    la evaluación. Frontend en **Angular** (formularios reactivos, guards, paginación) y backend **Spring Boot**
+    con endpoints REST y jobs de pre-procesamiento. Integración con **Gemini API** para generar embeddings/
+    puntuación de similitud y banderas de posibles duplicados. Persistencia en **PostgreSQL** (índices por
+    estado/fecha) y colas de validación para no bloquear la UI.
+  en: |
+    **AI-assisted validation** module to detect **duplicate/near-duplicate** submissions and speed up reviews.
+    **Angular** frontend (reactive forms, guards, pagination) and **Spring Boot** backend with REST endpoints
+    and preprocessing jobs. **Gemini API** integration for embeddings/similarity scoring with flags for
+    potential duplicates. **PostgreSQL** persistence (status/date indexes) and async validation queues to keep the UI responsive.
 metrics:
   es: ["-15% redundancia en propuestas"]
   en: ["-15% redundancy in proposals"]
@@ -22,3 +31,7 @@ links:
 cover: "/projects/cremhelado-cover.jpg"
 featured: true
 ---
+Contribuciones clave:
+- Diseño de **pipeline de similitud** (pre-tokenización, embeddings, umbrales y revisión humana).
+- Manejo de **re-intentos** y timeouts en llamadas a IA; **circuit breaker** simple en backend.
+- Registro de decisiones (audit log) y trazabilidad por propuesta.
