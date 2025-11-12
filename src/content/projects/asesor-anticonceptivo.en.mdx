@@ -1,0 +1,133 @@
+---
+title:
+  es: "Asesor Anticonceptivo — Orientación MEC (OMS)"
+  en: "Contraceptive Advisor — MEC Guidance (WHO)"
+slug: "asesor-anticonceptivo"
+period:
+  es: "Ago 2024 – Nov 2024"
+  en: "Aug 2024 – Nov 2024"
+role:
+  es: "Desarrollador Full-Stack (Next.js + TypeScript)"
+  en: "Full-Stack Developer (Next.js + TypeScript)"
+stack: ["Next.js 16","TypeScript","App Router","Tailwind CSS 3.5+","LocalStorage API","JSON-driven content"]
+description:
+  es: |
+    Plataforma web educativa para orientar a mujeres jóvenes (≥14 años) sobre **métodos anticonceptivos**
+    mediante criterios médicos de elegibilidad (**MEC**) de la OMS/ACOG/MinSalud. Incluye fichas detalladas
+    por método (DIU, implante, píldoras, barrera, emergencia, naturales), un **test interactivo** que
+    clasifica cada método en categorías 1–4 según condiciones de salud, un **comparador** de hasta 3 métodos,
+    y tratamiento de datos **local-only** (sin backend). UI **mobile-first** con paleta rosa, tono cercano
+    y clínicamente preciso, cumpliendo con privacidad y accesibilidad.
+  en: |
+    Educational web platform to guide young women (≥14 years) on **contraceptive methods** using WHO/ACOG
+    medical eligibility criteria (**MEC**). Features detailed method sheets (IUD, implant, pills, barrier,
+    emergency, natural), an **interactive test** that categorizes each method (1–4) based on health conditions,
+    a **comparison tool** for up to 3 methods, and **local-only** data processing (no backend). **Mobile-first**
+    UI with pink palette, approachable yet clinically accurate tone, ensuring privacy and accessibility.
+metrics:
+  es: ["12+ métodos anticonceptivos cubiertos","40+ condiciones médicas evaluadas","100% privacidad local (sin servidor)"]
+  en: ["12+ contraceptive methods covered","40+ medical conditions assessed","100% local privacy (no server)"]
+links:
+  - { label: "Código", href: "https://github.com/Ownnie/ma_paginfo", type: "repo" }
+  - { label: "Ver sitio", href: "https://asesoranticonceptivo.netlify.app/", type: "demo" }
+cover: "/projects/asesor-anticonceptivo-cover.jpg"
+featured: true
+---
+
+## Technical challenges solved
+
+### Medical eligibility engine (MEC)
+
+Implementation of the medical eligibility criteria algorithm based on WHO, ACOG, and MinSalud guidelines:
+
+- **1–4 Categorization**: Automatic classification system that evaluates the safety of each method according to specific conditions
+- **Complex dynamic rules**: 
+  - Postpartum/breastfeeding with intervals (less than 21, 21–42, more than 42 days) and VTE risk
+  - Smoking ≥35 years with a threshold of 15 cigarettes/day (category 3 vs 4 for CHC)
+  - Migraine with/without aura, severe hypertension, DVT/PE, thrombophilias, vascular diabetes
+  - Septic post-abortion, heavy bleeding, and 40+ conditions assessed
+- **Smart conditional flow**: Questions adapt based on previous answers (age, pregnancy, nulliparity, etc.)
+- **Modular architecture**: Clear separation between `engine.ts` (evaluation logic), `mappings.ts` (clinical rules), and `questions.ts` (questionnaire)
+
+### Privacy & local-only data handling
+
+Privacy-focused design without backend infrastructure:
+
+- **Exclusive LocalStorage**: All test answers are stored only in the user's browser
+- **Robust consent**: Modal with two checkboxes (medical notice + ≥14 years verification) persisted locally
+- **No tracking**: Zero personal identifiers, third-party cookies, or data sent to servers
+- **Privacy page**: Clear documentation of data handling and legal disclaimers
+
+### JSON-driven content architecture
+
+Scalable and maintainable system for managing medical information:
+
+- **Data & UI separation**: Method sheets in structured JSON (`/content/methods/*.json`)
+- **Easy versioning**: Medical content changes without touching code
+- **Ready for i18n**: Structure ready for internationalization
+- **Dynamic images**: Mapping system to associate images by method (`METHOD_IMAGES`)
+
+### Next.js 16 technical fixes
+
+Migration and optimization for modern App Router:
+
+- **Async params**: Fix for accessing `params` as Promise in dynamic routes
+- **Viewport export**: Separation of viewport configuration according to new APIs
+- **Dynamic metadata**: Async `generateMetadata` for per-method SEO
+- **Node >=20.9**: Runtime and dependencies updated
+
+## Main features
+
+### Method sheets (`/methods`)
+
+- **List with search and filters**: Hormonal, Non-hormonal, LARC, Emergency
+- **12 methods covered**: IUD (Cu/LNG), Implant (3/5 years), Injectables (monthly/quarterly), Pills (combined/progestin-only), Patch, Ring, Barrier, Emergency pill, Natural methods
+- **Info cards**: Badges, brief description, representative image
+- **Detailed method sheets**: Quick facts, efficacy (typical/perfect), advantages, considerations, CTA to test
+
+### Interactive MEC test (`/test`)
+
+- **Adaptive questionnaire**: 40+ conditional questions based on health profile
+- **Real-time evaluation**: Instant classification of all methods (1–4)
+- **Personalized results**: Recommendations based on medical evidence
+- **Local persistence**: State saved in browser to resume later
+
+### Method comparator (`/compare`)
+
+- **Multiple selection**: Up to 3 methods simultaneously
+- **Responsive table**: Side-by-side comparison of key features
+- **Compared criteria**: Type/hormones, duration, STI protection, efficacy, emergency use, advantages and considerations
+- **Optimized UX**: Selectable pills, highlighted headers, informative badges
+
+### Home & navigation
+
+- **Impactful hero**: Clear CTA to the test
+- **Educational sections**: Objective, need, clinical question PICO
+- **Consistent header/footer**: Main navigation, educational/emergency notice
+- **Coherent design**: Pink + white palette, gradients, underbar, hover cards
+
+## UX & content improvements
+
+- **Brand-free copy**: "Emergency pill" instead of brand names
+- **Dual copper IUD**: Marked as regular contraceptive AND emergency method
+- **Visible barrier methods**: With clear note about STI protection
+- **Natural methods included**: Full coverage of contraceptive spectrum
+- **Mobile-first**: Simple controls, readable fonts, generous spacing
+- **Accessibility**: Clear badges, proper contrast, intuitive navigation
+
+## Impact & results
+
+- **Evidence-based education**: Up-to-date information according to international guidelines (WHO/ACOG/MinSalud)
+- **Informed autonomy**: Users can explore options according to their specific health profile
+- **Guaranteed privacy**: Zero risk of sensitive health data leakage
+- **Scalability**: Architecture ready to add methods, languages, and medical updates
+- **References intact**: All efficacy figures and recommendations maintain original scientific backing
+
+## Detailed tech stack
+
+- **Framework**: Next.js 16 (App Router) + strict TypeScript
+- **Styles**: Tailwind CSS 3.5+ with custom config
+- **Persistence**: LocalStorage API for test state and consent
+- **Content**: Structured JSON with type validation
+- **Deploy**: Vercel (edge functions, global CDN)
+- **Tooling**: ESLint + Prettier, standard Git flow

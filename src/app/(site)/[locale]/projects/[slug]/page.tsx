@@ -50,7 +50,7 @@ export default async function ProjectDetail({ params }: { params: { locale: Loca
     const messages = (await getMessages({ locale })) as TMsgs;
     const t = messages;
 
-    const data = getProjectBySlug(slug);
+    const data = getProjectBySlug(slug, locale);
     if (!data) return notFound();
 
     const meta = data.meta as Project;
@@ -174,7 +174,7 @@ export default async function ProjectDetail({ params }: { params: { locale: Loca
 
             {/* Cuerpo MDX (si lo quieres bilingüe, necesitarás un MDX por locale) */}
             {body ? (
-                <article className="prose prose-invert prose-h2:mt-10 prose-h2:text-white prose-h3:text-white/90 prose-p:text-white/80 prose-strong:text-white prose-a:text-brand-300">
+                <article className="prose prose-invert max-w-none prose-headings:font-semibold prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-4 prose-h2:text-white prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3 prose-h3:text-white/95 prose-p:text-white/80 prose-p:leading-relaxed prose-strong:text-white prose-strong:font-semibold prose-a:text-brand-400 prose-a:no-underline hover:prose-a:text-brand-300 prose-code:text-brand-300 prose-code:bg-white/5 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:before:content-none prose-code:after:content-none prose-ul:text-white/80 prose-li:my-1 prose-li:marker:text-brand-500">
                     <MDXRemote
                         source={body}
                         options={{

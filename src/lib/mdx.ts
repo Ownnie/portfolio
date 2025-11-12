@@ -46,9 +46,22 @@ export function getFeaturedProjects(max = 4): Project[] {
     return items.slice(0, max);
 }
 
-export function getProjectBySlug(slug: string) {
+export function getProjectBySlug(slug: string, locale?: string) {
     const dir = resolveProjectsDir();
     if (!dir) throw new Error('Projects directory not found');
+
+    // Intentar primero con sufijo de idioma (ej: slug.en.mdx)
+    if (locale) {
+        const localizedFile = path.join(dir, `${slug}.${locale}.mdx`);
+        if (fs.existsSync(localizedFile)) {
+            const raw = fs.readFileSync(localizedFile, 'utf8');
+            const { data, content } = matter(raw);
+            const meta = ProjectSchema.parse(data);
+            return { meta, content };
+        }
+    }
+
+    // Si no existe versión localizada, usar el archivo base
     const file = path.join(dir, `${slug}.mdx`);
     const raw = fs.readFileSync(file, 'utf8');
     const { data, content } = matter(raw);
