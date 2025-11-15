@@ -24,12 +24,34 @@ function resolveProjectsDir() {
 function readAll(): Project[] {
     const dir = resolveProjectsDir();
     if (!dir) return [];
-    const files = fs.readdirSync(dir).filter(f => f.endsWith('.mdx'));
-    const items = files.map(file => {
+    const files = fs.readdirSync(dir).filter((f) => f.endsWith('.mdx'));
+
+    // Agrupar por slug base y preferir en este orden: base.mdx > .es.mdx > .en.mdx
+    const pickBySlug = new Map<string, string>();
+
+    for (const file of files) {
+        const isLocalized = /\.(es|en)\.mdx$/i.test(file);
+        const baseSlug = isLocalized ? file.replace(/\.(es|en)\.mdx$/i, '') : file.replace(/\.mdx$/i, '');
+        const current = pickBySlug.get(baseSlug);
+
+        if (!current) {
+            pickBySlug.set(baseSlug, file);
+            continue;
+        }
+
+        // Prioridad: base.mdx (sin sufijo) > .es.mdx > .en.mdx
+        const rank = (f: string) => (/(^|\.)en\.mdx$/i.test(f) ? 1 : /(^|\.)es\.mdx$/i.test(f) ? 2 : 3);
+        if (rank(file) > rank(current)) {
+            pickBySlug.set(baseSlug, file);
+        }
+    }
+
+    const items: Project[] = [];
+    for (const file of pickBySlug.values()) {
         const raw = fs.readFileSync(path.join(dir, file), 'utf8');
         const { data } = matter(raw);
-        return ProjectSchema.parse(data);
-    });
+        items.push(ProjectSchema.parse(data));
+    }
     return items;
 }
 
@@ -62,9 +84,30 @@ export function getProjectBySlug(slug: string, locale?: string) {
     }
 
     // Si no existe versión localizada, usar el archivo base
-    const file = path.join(dir, `${slug}.mdx`);
-    const raw = fs.readFileSync(file, 'utf8');
-    const { data, content } = matter(raw);
-    const meta = ProjectSchema.parse(data);
-    return { meta, content };
+    const baseFile = path.join(dir, `${slug}.mdx`);
+    if (fs.existsSync(baseFile)) {
+        const raw = fs.readFileSync(baseFile, 'utf8');
+        const { data, content } = matter(raw);
+        const meta = ProjectSchema.parse(data);
+        return { meta, content };
+    }
+
+    // Fallback adicional: si no hay base, intentar .es y luego .en para evitar ENOENT
+    const esFile = path.join(dir, `${slug}.es.mdx`);
+    if (fs.existsSync(esFile)) {
+        const raw = fs.readFileSync(esFile, 'utf8');
+        const { data, content } = matter(raw);
+        const meta = ProjectSchema.parse(data);
+        return { meta, content };
+    }
+    const enFile = path.join(dir, `${slug}.en.mdx`);
+    if (fs.existsSync(enFile)) {
+        const raw = fs.readFileSync(enFile, 'utf8');
+        const { data, content } = matter(raw);
+        const meta = ProjectSchema.parse(data);
+        return { meta, content };
+    }
+
+    // Si no se encontró ningún archivo, lanzar error claro
+    throw new Error(`Project file not found for slug: ${slug}`);
 }

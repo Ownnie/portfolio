@@ -1,0 +1,141 @@
+---
+title:
+  es: "Quoridor — Juego de Estrategia con Agente Sintético"
+  en: "Quoridor — Strategy Game with Synthetic Agent"
+slug: "quoridor"
+period:
+  es: "Sep 2025 – Nov 2025"
+  en: "Sep 2025 – Nov 2025"
+role:
+  es: "Desarrollador Full-Stack (Next.js + Algoritmos)"
+  en: "Full-Stack Developer (Next.js + Algorithms)"
+stack: ["Next.js 15","React 19","TypeScript","Tailwind CSS","BFS","Heurísticas Greedy","Diseño de Motor de Juego","Context API"]
+description:
+  es: |
+    Implementación completa del juego abstracto Quoridor con tablero 9×9, reglas oficiales de movimiento (pasos ortogonales, 
+    saltos sobre oponente y diagonales cuando el salto está bloqueado), y validación de muros sin bloquear rutas usando BFS. 
+    Incluye agente CPU con heurística Greedy que evalúa distancia mínima al objetivo. Arquitectura funcional con reducer puro, 
+    estado inmutable y separación estricta entre lógica de juego y UI. Modos PvP y Persona vs Máquina con interfaz responsiva.
+  en: |
+    Complete Quoridor game implementation featuring 9×9 board, official movement rules (orthogonal steps, jumps over opponent, 
+    and diagonals when jump is blocked), and wall validation ensuring path reachability via BFS. Includes CPU agent with Greedy 
+    heuristic evaluating minimum distance to goal. Functional architecture with pure reducer, immutable state, and strict 
+    separation between game logic and UI. PvP and Human vs Machine modes with responsive interface.
+impact:
+  es:
+    - "Arquitectura modular con núcleo algorítmico separado de UI para facilitar testing y mejoras"
+    - "BFS O(V+E) para validación de alcanzabilidad en cada colocación de muro (eficiente en 9×9)"
+    - "Agente Greedy que evalúa ∆ = distanciaPropia - distanciaRival con desempate a favor de mover"
+    - "UI con previsualización de muros (blanco=válido, rojo=inválido) y colores por dueño"
+    - "Bloqueo de interacciones durante turno CPU con indicador 'Pensando…' para mejor UX"
+  en:
+    - "Modular architecture with algorithmic core separated from UI for easier testing and enhancements"
+    - "BFS O(V+E) for reachability validation on each wall placement (efficient on 9×9)"
+    - "Greedy agent evaluating ∆ = ownDistance - rivalDistance with tiebreaker favoring moves"
+    - "UI with wall preview (white=valid, red=invalid) and owner-colored walls"
+    - "Input blocking during CPU turn with 'Thinking…' indicator for better UX"
+metrics:
+  es:
+    - "Reducer puro con estado inmutable (structuredClone) para acciones sin mutación"
+    - "Generación de acciones evaluando ~8 movimientos + 2·(n-1)² posiciones de muros"
+    - "2 BFS por validación de muro (uno por jugador) con complejidad O(81+144) = O(225)"
+    - "Separación lógica: types, gameState, rules, bfs, engine, ai (6 módulos core)"
+  en:
+    - "Pure reducer with immutable state (structuredClone) for mutation-free actions"
+    - "Action generation evaluating ~8 moves + 2·(n-1)² wall positions"
+    - "2 BFS per wall validation (one per player) with O(81+144) = O(225) complexity"
+    - "Logic separation: types, gameState, rules, bfs, engine, ai (6 core modules)"
+links:
+  - { label: "Código", href: "https://github.com/Ownnie/quoridor", type: "repo" }
+  - { label: "Demo", href: "https://quoridoralgan.netlify.app", type: "demo" }
+cover: "/projects/quoridor.jpg"
+featured: true
+---
+
+## Resumen Técnico
+
+Implementación completa del juego Quoridor con tablero 9×9 siguiendo reglas oficiales. El proyecto separa estrictamente la lógica de juego (núcleo algorítmico) de la interfaz de usuario, facilitando testing, mantenimiento y futuras mejoras como Minimax con poda alfa-beta.
+
+### Arquitectura del Núcleo Algorítmico
+
+**Módulos Core** (lógica pura sin dependencias de React):
+
+- **`types.ts`**: Define `GameState` con tablero, turno, posiciones de peones, muros restantes, matrices de muros H 8×9 y V 9×8, dueños de muros (HO/VO para coloreo), y ganador.
+- **`gameState.ts`**: `createInitialState(config)` inicializa peones en filas opuestas y matrices de muros en `false`.
+- **`rules.ts`**: 
+  - `legalMoves(state, player)`: calcula movimientos válidos (pasos ortogonales, saltos sobre rival, diagonales cuando salto bloqueado).
+  - `canMove/applyMove`: validación e aplicación inmutable de movimientos.
+  - `canPlaceWall/applyPlaceWall`: valida solapes, cruces, bordes y ejecuta 2 BFS (uno por jugador) para garantizar que ambos conserven ruta al objetivo.
+- **`bfs.ts`**: 
+  - `pathExists(state, player)`: alcanzabilidad O(V+E) para validar muros.
+  - `shortestDistanceToGoal(state, player)`: distancia mínima para heurísticas.
+- **`engine.ts`**: `reduce(state, action)` aplica acciones si son legales, alterna turno y detecta ganador.
+- **`ai.ts`**: 
+  - `enumerateActions`: genera todos los movimientos legales + todas las posiciones válidas de muros.
+  - `chooseGreedyAction`: evalúa cada acción simulada por ∆ = distanciaPropia − distanciaRival; elige la que minimiza ∆ con desempate a favor de mover (mejor ritmo).
+
+### Estado y UI
+
+**Context Store** (`gameStore.tsx`):
+- Mantiene configuración, estado de juego, flag `thinking`, `inputDisabled`, funciones `dispatch` y `reset`.
+- Dispara turno CPU (jugador 1) con delay de 500ms para UX y bloquea input durante "pensando".
+
+**Componentes React**:
+- **`Board.tsx`**: Rejilla 2n−1 (17×17 visual) con celdas y pistas para muros; superpone preview/colocado sin bloquear clicks.
+- **`Cell.tsx`**: Resalta destinos legales y maneja click para mover peón.
+- **`WallSlot.tsx`**: "Slots" para muros H/V con preview (blanco=válido, rojo=inválido) y color por dueño tras colocar.
+- **`Hud.tsx`**: Muestra turno actual, muros restantes por jugador, ganador e indicador "Pensando…".
+- **`RestartButton.tsx`**: Componente cliente para reiniciar partida.
+
+**Página** (`page.tsx`): Server Component que recibe `searchParams` (`mode=pvp|cpu`) y compone HUD, tablero y controles.
+
+## Reglas y Modelado
+
+### Tablero y Muros
+
+- Tablero 9×9 generalizable a cualquier `n` impar.
+- Muros horizontales: `H[r][c]` y `H[r][c+1]` (r∈[0..7], c∈[0..7]).
+- Muros verticales: `V[r][c]` y `V[r+1][c]` (r∈[0..7], c∈[0..7]).
+- Validación: sin solapes, sin cruces inválidos; cada colocación simula y verifica `pathExists` para ambos jugadores.
+
+### Movimiento
+
+1. **Paso ortogonal**: si no hay muro intermedio y celda destino está libre.
+2. **Salto sobre rival**: si vecino ortogonal es el rival, salta por detrás si no hay muro.
+3. **Diagonales**: si el salto está bloqueado, permite diagonales alrededor del rival (si accesibles).
+4. **Victoria**: declarada al alcanzar la fila opuesta (`isGoal`).
+
+## Algoritmos y Complejidad
+
+### BFS Alcanzabilidad/Distancia
+- **Complejidad**: O(V+E) con V=n² y E≈2n(n−1).
+- Para n=9: V=81, E≈144, muy eficiente.
+
+### Enumeración de Acciones
+- **Movimientos**: hasta ~8 posibilidades (saltos/diagonales).
+- **Muros**: como máximo 2·(n−1)² cheques (128 para n=9); cada `canPlaceWall` hace 2 BFS (~450 operaciones), aceptable en 9×9.
+
+### Heurística Greedy
+- Evalúa acción simulada por **∆ = distPropia − distRival** (más pequeño mejor).
+- **Desempate**: prefiere "mover" sobre "colocar muro" para ritmo de juego.
+
+## Decisiones de Diseño
+
+1. **Reducer puro** (`reduce`) y funciones puras para reglas; `structuredClone` para aplicar acciones sin mutar.
+2. **Dueños de muros** (HO/VO) para coloreo consistente en UI.
+3. **Separación estricta** UI/lógica facilita testing y futuras mejoras (Minimax, memoización).
+4. **Context API** para estado global sin prop-drilling.
+
+## Experiencia de Juego
+
+- **Modos**: PvP (dos humanos) y Persona vs CPU (jugador azul controla CPU).
+- **Previsualización**: muros con color blanco/rojo según validez; color por dueño cuando se colocan.
+- **Bloqueo de interacciones**: durante turno CPU con badge "Pensando…".
+- **Reiniciar**: botón para empezar nueva partida.
+
+## Mejoras Futuras
+
+- **Minimax** con poda alfa–beta y tabla de transposición (hash del estado).
+- **Deshacer/rehacer**, métricas de búsqueda (nodos, profundidad, tiempo).
+- **Tests unitarios** para reglas de movimiento, muros y BFS.
+- **Persistencia** de partidas y export de métricas para análisis.

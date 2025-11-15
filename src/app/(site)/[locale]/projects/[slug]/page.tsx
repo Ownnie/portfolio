@@ -21,9 +21,9 @@ export function generateStaticParams() {
 }
 
 /* OG: usa los campos localizados también */
-export async function generateMetadata({ params }: { params: { locale: Locale; slug: string } }) {
-    const { locale, slug } = params;
-    const { meta } = getProjectBySlug(slug);
+export async function generateMetadata({ params }: { params: Promise<{ locale: Locale; slug: string }> }) {
+    const { locale, slug } = await params;
+    const { meta } = getProjectBySlug(slug, locale);
 
     const title = tText(meta.title as I18nText, locale);
     const description = tText(meta.description as I18nText, locale) || tText(meta.role as I18nText, locale) || 'Project';
@@ -45,8 +45,8 @@ type TMsgs = {
     projectDetail?: { highlights?: string; back?: string };
 };
 
-export default async function ProjectDetail({ params }: { params: { locale: Locale; slug: string } }) {
-    const { locale, slug } = params;
+export default async function ProjectDetail({ params }: { params: Promise<{ locale: Locale; slug: string }> }) {
+    const { locale, slug } = await params;
     const messages = (await getMessages({ locale })) as TMsgs;
     const t = messages;
 

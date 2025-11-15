@@ -11,8 +11,8 @@ import { tText, type I18nText } from '@/lib/i18n/content';
 
 
 /*-------------------OG-------------------- */
-export async function generateMetadata({ params }: { params: { locale: 'es' | 'en' } }) {
-  const { locale } = params;
+export async function generateMetadata({ params }: { params: Promise<{ locale: 'es' | 'en' }> }) {
+  const { locale } = await params;
   const base = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://tudominio.com';
   const og = `${base}/${locale}/opengraph-image`;
 
@@ -25,8 +25,8 @@ export async function generateMetadata({ params }: { params: { locale: 'es' | 'e
 }
 
 /* ---------------- page ---------------- */
-export default async function Home({ params }: { params: { locale: 'es' | 'en' } }) {
-  const { locale } = params;
+export default async function Home({ params }: { params: Promise<{ locale: 'es' | 'en' }> }) {
+  const { locale } = await params;
 
   const tHome = await getTranslations({ locale, namespace: 'home' });
   const tBtn = await getTranslations({ locale, namespace: 'buttons' });
