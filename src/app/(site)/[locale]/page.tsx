@@ -96,7 +96,7 @@ export default async function Home({ params }: { params: Promise<{ locale: 'es' 
 
           {/* chips */}
           <div className="mt-5 sm:mt-6 flex flex-wrap gap-2 text-xs sm:text-sm">
-            {['Next.js', 'TypeScript', 'Spring Boot', 'Flutter', 'PostgreSQL', 'AWS/Azure'].map(s => (
+            {['TypeScript', 'NestJS', 'Flutter', 'React', 'PostgreSQL', 'AWS', 'Docker', 'Playwright'].map(s => (
               <span
                 key={s}
                 className="rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 sm:px-3 text-white/80"

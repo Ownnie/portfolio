@@ -6,7 +6,7 @@ import TechChips from '@/components/TechChips';
 export const runtime = 'nodejs';
 
 type Exp = { company: string; title: string; location?: string; period: string; bullets: string[] };
-type Edu = { school: string; place: string; degree: string; notes?: string };
+type Edu = { school: string; place: string; degree: string; period?: string; notes?: string };
 type AP = {
     meta: { title: string; description: string };
     title: string;
@@ -19,13 +19,15 @@ type AP = {
 
 type AboutMsgs = { aboutPage?: AP };
 
-export async function generateMetadata({ params }: { params: { locale: 'es' | 'en' } }) {
-    const { locale } = params;
+export async function generateMetadata({ params }: { params: Promise<{ locale: 'es' | 'en' }> }) {
+    const { locale } = await params;
     const base = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://tudominio.com';
     const og = `${base}/${locale}/about/opengraph-image`;
     return {
-        title: 'About — Nicolás Calderón',
-        description: 'Ingeniero de Software Full-Stack & Cloud.',
+        title: locale === 'en' ? 'About — Nicolás Calderón' : 'Sobre mí — Nicolás Calderón',
+        description: locale === 'en'
+            ? 'Software Engineer with 3+ years of experience. Backend with TypeScript, mobile with Flutter.'
+            : 'Ingeniero de Software con más de 3 años de experiencia. Backend con TypeScript, móvil con Flutter.',
         openGraph: { images: [{ url: og, width: 1200, height: 630 }], locale },
         twitter: { card: 'summary_large_image', images: [og] },
     };
@@ -45,8 +47,8 @@ function extractTechs(lines: string[]): string[] {
     return Array.from(out);
 }
 
-export default async function AboutPage({ params }: { params: { locale: 'es' | 'en' } }) {
-    const { locale } = params;
+export default async function AboutPage({ params }: { params: Promise<{ locale: 'es' | 'en' }> }) {
+    const { locale } = await params;
     const messages = (await getMessages({ locale })) as AboutMsgs;
     const ap = messages.aboutPage;
 
@@ -77,10 +79,10 @@ export default async function AboutPage({ params }: { params: { locale: 'es' | '
                     {/* badges de rol */}
                     <div className="mt-3 flex flex-wrap gap-2 text-sm">
                         <span className="rounded-md bg-white/[0.06] px-2.5 py-1 ring-1 ring-white/10">
-                            Ingeniero de Software
+                            {locale === 'en' ? 'Software Engineer' : 'Ingeniero de Software'}
                         </span>
                         <span className="rounded-md bg-white/[0.06] px-2.5 py-1 ring-1 ring-white/10">
-                            Full-Stack & Cloud
+                            {locale === 'en' ? 'Backend & Mobile' : 'Backend & Móvil'}
                         </span>
                     </div>
 
@@ -144,14 +146,14 @@ export default async function AboutPage({ params }: { params: { locale: 'es' | '
                                 </ul>
 
                                 {/* aprendizaje clave */}
+                                {exp.bullets.length > 0 && (
                                 <p className="mt-3 text-sm text-white/75">
-                                    <Highlight>Aprendizaje:</Highlight>{' '}
+                                    <Highlight>{locale === 'en' ? 'Key takeaway:' : 'Aprendizaje:'}</Highlight>{' '}
                                     <span className="text-white/80">
-                                        {i === 0
-                                            ? 'Estabilidad en campo, UX móvil y performance real bajo condiciones de uso intensivo.'
-                                            : 'Entregas consistentes, optimización de tiempos de carga y diseño de integraciones fiables.'}
+                                        {exp.bullets[exp.bullets.length - 1]}
                                     </span>
                                 </p>
+                                )}
                             </article>
                         </li>
                     ))}
@@ -170,6 +172,7 @@ export default async function AboutPage({ params }: { params: { locale: 'es' | '
                             <h3 className="text-lg font-semibold">{e.school}</h3>
                             <p className="text-white/70">{e.place}</p>
                             <p className="mt-1 text-white/85">{e.degree}</p>
+                            {e.period ? <p className="text-xs text-white/50 mt-0.5">{e.period}</p> : null}
                             {e.notes ? <p className="mt-2 text-white/70">{e.notes}</p> : null}
                         </div>
                     ))}

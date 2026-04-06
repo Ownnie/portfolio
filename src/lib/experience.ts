@@ -8,19 +8,35 @@ export type ExperienceItem = {
 
 export const experienceTeaser: ExperienceItem[] = [
     {
+        company: 'Kapwork Inc.',
+        title: 'Software Engineer',
+        location: 'Remote',
+        period: 'Nov 2025 – Apr 2026',
+        summary:
+            'Built typed backend services and REST APIs for an agent-based data extraction and verification platform using TypeScript, NestJS, SSE and polling workflows. Developed AI/ML-driven failure-classification flows.'
+    },
+    {
+        company: 'SIGUS',
+        title: 'Project Leader',
+        location: 'Remote',
+        period: 'Dec 2025 – Present',
+        summary:
+            'Led end-to-end development of a license control platform. Architected a SuiteCRM iframe module with real-time geolocation and integrated facial recognition into authentication.'
+    },
+    {
         company: 'SIGUS',
         title: 'Mobile App Developer',
         location: 'Remote',
-        period: 'Mar 2025 – Presente',
+        period: 'Mar 2025 – Dec 2025',
         summary:
-            'App móvil CRM para seguridad privada: turnos, check-ins/outs, patrullajes y supervisión. Diseño de UI moderna, corrección de bugs críticos y mejoras de rendimiento en campo.'
+            'Contributed to mobile app architecture and delivered responsive Flutter interfaces for private-security operations. Resolved critical bugs and improved field stability.'
     },
     {
         company: 'Freelance',
         title: 'Full-stack Developer',
         location: 'Remote',
-        period: 'Abr 2023 – Mar 2025',
+        period: 'Apr 2023 – Mar 2025',
         summary:
-            '15+ sitios y apps full-stack. Integraciones REST (Node.js/Spring Boot), automatizaciones con IA y Tiempos de carga <2s en producción. 90% de proyectos entregados a tiempo.'
+            '15+ websites and web apps for small businesses. Integrated Node.js and Spring Boot APIs improving response times by 25%. 90% on-time delivery rate.'
     }
 ];

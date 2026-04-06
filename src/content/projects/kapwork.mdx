@@ -1,0 +1,48 @@
+---
+title:
+  es: "Kapwork — Plataforma Basada en Agentes para Extracción y Verificación de Datos"
+  en: "Kapwork — Agent-Based Data Extraction & Verification Platform"
+slug: "kapwork"
+period:
+  es: "Nov 2025 – Abr 2026"
+  en: "Nov 2025 – Apr 2026"
+role:
+  es: "Ingeniero de Software (TypeScript, NestJS, React)"
+  en: "Software Engineer (TypeScript, NestJS, React)"
+stack: ["TypeScript","Node.js","NestJS","React","Playwright","SSE","Vitest","GitHub Actions"]
+description:
+  es: |
+    Plataforma basada en agentes para **extracción y verificación de datos**. Diseñé una **máquina de estados
+    tipada de 10 estados** para flujos de verificación en tiempo real, unificando onboarding y actualización de
+    credenciales con **streaming SSE**, fallback por polling y lógica de reintentos. Orquesté **pipelines
+    impulsados por IA/ML** para clasificación operativa de errores, construyendo un motor de detección de tipos
+    de error con verificaciones automatizadas que clasifican fallas y activan remediación. Desarrollé y fortalecí
+    **scrapers y agentes** (runners con Playwright) y establecí arquitecturas testeables con **pruebas
+    automatizadas** (Vitest + Playwright e2e) y **pipelines de CI/CD** en GitHub Actions.
+  en: |
+    Agent-based platform for **data extraction and verification**. Designed a **typed 10-state machine** for
+    real-time verification flows unifying onboarding and credential-update with **SSE streaming**, polling
+    fallback, and retry logic. Orchestrated **AI/ML-powered pipelines** for operational error classification,
+    building an error-type detection engine with automated checks that classify failures and trigger remediation.
+    Developed and **hardened scrapers and agents** (Playwright runners), implementing credential-update strategies
+    and leading auditing/migration efforts to reduce production incidents. Established testable architectures with
+    **automated testing** (Vitest + Playwright e2e) and **CI/CD pipelines** in GitHub Actions.
+impact:
+  es: ["Motor de detección de errores con IA/ML","Máquina de estados de 10 estados para verificación en tiempo real","Reducción de incidentes en producción"]
+  en: ["AI/ML-powered error detection engine","10-state machine for real-time verification","Reduced production incidents"]
+metrics:
+  es: ["10 estados en máquina de verificación","CI/CD automatizado con GitHub Actions","Testing e2e con Playwright + Vitest"]
+  en: ["10-state verification machine","Automated CI/CD with GitHub Actions","E2E testing with Playwright + Vitest"]
+links:
+  - { label: "Código", href: "", type: "repo" }
+  - { label: "Preview", href: "", type: "demo" }
+cover: "/projects/kapwork-cover.jpg"
+featured: true
+---
+## Key Contributions
+
+- **Typed state machine**: Designed a 10-state verification flow that unifies onboarding and credential updates with SSE streaming, polling fallback, and retry logic.
+- **AI/ML error classification**: Built an error-type detection engine with automated checks that classify agent failures (scraper crashes, portal timeouts, credential issues) and trigger the appropriate remediation path.
+- **Agent hardening**: Developed and strengthened Playwright-based scrapers with credential-update strategies, proxy rotation, and session management to reduce flakiness and production incidents.
+- **Testing & CI/CD**: Established testable architectures using Vitest for unit tests and Playwright for e2e, with CI/CD pipelines in GitHub Actions for automated validation on every PR.
+- **Observability**: Improved logging, error tracking, and monitoring practices across the platform for better operational visibility.
